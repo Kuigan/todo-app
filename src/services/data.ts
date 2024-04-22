@@ -1,46 +1,46 @@
 import * as fs from 'node:fs'
-import { Note } from '../types/notes'
+import { ToDo as ToDo } from '../types/todo.js'
 
-type NotesRaw = {
-  notes: Note[]
+type ToDoRaw = {
+  todo: ToDo[]
 }
 
-export function getNotes(): Note[] {
-  const notesRaw = fs.readFileSync('data/notes.json', 'utf8')
-  const notizen = JSON.parse(notesRaw) as NotesRaw
-  const array = notizen.notes
+export function getToDos(): ToDo[] {
+  const toDosRaw = fs.readFileSync('data/todos.json', 'utf8')
+  const aufgaben = JSON.parse(toDosRaw) as ToDoRaw
+  const array = aufgaben.todo
   return array
 }
 
-export function getNoteById(id: number): Note | undefined {
-  const notes = getNotes() 
-  const note = notes.find(note => note.id === id)
-  return note
+export function getToDoById(id: number): ToDo | undefined {
+  const toDos = getToDos() 
+  const toDo = toDos.find(todo => todo.id === id)
+  return toDo
 }
 
-export function writeNotesToFile(oldNotes: Note[]): void { 
-  const newNotes: NotesRaw = { notes: oldNotes }
-  fs.writeFileSync('data/notes.json', JSON.stringify(newNotes))
+export function writeToDoToFile(oldToDos: ToDo[]): void { 
+  const newToDos: ToDoRaw = { todo: oldToDos }
+  fs.writeFileSync('data/notes.json', JSON.stringify(newToDos))
 }
 
-export function addNote(title: string, content: string, user: string): void {
-  const oldNotes = getNotes()
-  const id = oldNotes.length + 1
-  const newNote: Note = new Note(id, title, content, user)
-  oldNotes.push(newNote)
-  writeNotesToFile(oldNotes)
+export function addToDo(todo: string, deadline: string, assignee: string, owner: string, status: string): void {
+  const oldToDos = getToDos()
+  const id = oldToDos.length + 1
+  const newToDo: ToDo = new ToDo(id, todo, deadline, assignee, owner, status)
+  oldToDos.push(newToDo)
+  writeToDoToFile(oldToDos)
 }
 
-export function updateNote(id: number, title: string, content: string, user: string): void {
-  const oldNotes = getNotes()
-  const filteredNotes = oldNotes.filter(note => note.id !== id)
-  const newNote: Note = new Note(id, title, content, user)
-  filteredNotes.push(newNote)
-  writeNotesToFile(filteredNotes)
+export function updateToDo(id: number, todo: string, deadline: string, assignee: string, owner: string, status: string): void {
+  const oldToDos = getToDos()
+  const filteredToDos = oldToDos.filter(todo => todo.id !== id)
+  const newToDo: ToDo = new ToDo(id, todo, deadline, assignee, owner, status)
+  filteredToDos.push(newToDo)
+  writeToDoToFile(filteredToDos)
 }
 
-export function deleteNoteById(id: number): void {
-  const oldNotes = getNotes()
-  const filteredNotes = oldNotes.filter(note => note.id !== id)
-  writeNotesToFile(filteredNotes)
+export function deleteToDoById(id: number): void {
+  const oldToDos = getToDos()
+  const filteredToDos = oldToDos.filter(todo => todo.id !== id)
+  writeToDoToFile(filteredToDos)
 }

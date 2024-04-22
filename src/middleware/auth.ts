@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { getAdmins } from "../services/auth"
+import { getAdmins } from "../services/auth.js"
 
 
 export function hasAuthentication(req: Request, res: Response, next: NextFunction) {

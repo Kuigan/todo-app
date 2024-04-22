@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
-import { infoRouter } from './routes/info'
-import { notesRouter } from './routes/notes'
+import { infoRouter } from './routes/info.js'
+import { todosRouter } from './routes/todos.js';
 
 // we define our server and port
 
@@ -15,7 +15,7 @@ app.use(express.json())
 // Setup routes
 
 app.use('/info', infoRouter)
-app.use('/notes', notesRouter)
+app.use('/todos', todosRouter)
 
 
 // http-request: method (GET, POST, ...), URL (path)

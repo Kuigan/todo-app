@@ -3,9 +3,9 @@ import { Request, Response, Router } from 'express'
 export const infoRouter = Router()
 
 infoRouter.get('/', (req: Request, res: Response) => {
-  res.send('GET - Wir haben heute viel über APIs und HTTP gelernt.')
+  res.send('GET - Anfrage angekommen.')
 })
 
 infoRouter.post('/', (req: Request, res: Response) => {
-  res.send('POST - Deine Post Anfrage ist angekommen!')
+  res.send('POST - Anfrage angekommen.')
 })
