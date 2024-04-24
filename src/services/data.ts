@@ -20,11 +20,11 @@ export function getToDoById(id: number): ToDo | undefined {
 
 export function writeToDoToFile(oldToDos: ToDo[]): void { 
   const newToDos: ToDoRaw = { todo: oldToDos }
-  fs.writeFileSync('data/notes.json', JSON.stringify(newToDos))
+  fs.writeFileSync('data/todos.json', JSON.stringify(newToDos))
 }
 
 export function addToDo(todo: string, deadline: string, assignee: string, owner: string, status: string): void {
-  const oldToDos = getToDos()
+  const oldToDos = getToDos() || []
   const id = oldToDos.length + 1
   const newToDo: ToDo = new ToDo(id, todo, deadline, assignee, owner, status)
   oldToDos.push(newToDo)
