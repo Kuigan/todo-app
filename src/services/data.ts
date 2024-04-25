@@ -23,17 +23,23 @@ export function writeToDoToFile(oldToDos: ToDo[]): void {
   fs.writeFileSync('data/todos.json', JSON.stringify(newToDos))
 }
 
-export function addToDo(todo: string, deadline: string, assignee: string, owner: string, status: string): void {
-  const oldToDos = getToDos() || []
-  const id = oldToDos.length + 1
-  const newToDo: ToDo = new ToDo(id, todo, deadline, assignee, owner, status)
-  oldToDos.push(newToDo)
-  writeToDoToFile(oldToDos)
+export function addToDo(todo: string, deadline: string, assignee: string, owner: string, status: "not started" | "in progress" | "ready for review" | "in review" | "done"): void {
+  const oldToDos = getToDos() || [];
+  const id = oldToDos.length + 1;
+  if (!["not started", "in progress", "ready for review", "in review", "done"].includes(status)) {
+    throw new Error("Ungültiger Statuswert.");
+  }
+  const newToDo: ToDo = new ToDo(id, todo, deadline, assignee, owner, status);
+  oldToDos.push(newToDo);
+  writeToDoToFile(oldToDos);
 }
 
-export function updateToDo(id: number, todo: string, deadline: string, assignee: string, owner: string, status: string): void {
+export function updateToDo(id: number, todo: string, deadline: string, assignee: string, owner: string, status: "not started" | "in progress" | "ready for review" | "in review" | "done"): void {
   const oldToDos = getToDos()
   const filteredToDos = oldToDos.filter(todo => todo.id !== id)
+  if (!["not started", "in progress", "ready for review", "in review", "done"].includes(status)) {
+    throw new Error("Ungültiger Statuswert.");
+  }
   const newToDo: ToDo = new ToDo(id, todo, deadline, assignee, owner, status)
   filteredToDos.push(newToDo)
   writeToDoToFile(filteredToDos)
