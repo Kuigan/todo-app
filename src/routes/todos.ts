@@ -5,6 +5,11 @@ import { hasAuthentication } from '../middleware/auth.js'
 
 export const todosRouter = Router()
 
+/**
+ * Router zur Verwaltung von ToDo-Aufgaben.
+ * Definiert Endpunkte für das Hinzufügen, Abrufen, Aktualisieren und Löschen von ToDo-Aufgaben.
+ * Erfordert Authentifizierung für alle Operationen.
+ */
 
 todosRouter.post('/', hasAuthentication, (req: Request, res: Response) => {
 
